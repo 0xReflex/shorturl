@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    input {
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      font-size: 16px;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      background: #ff9a9e;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: #333;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    #result {
+      background: rgba(0,0,0,0.2);
+      padding: 10px;
+      border-radius: 6px;
+      word-wrap: break-word;
+    }
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>URL Shortener</h1>
+
+  <div class="container">
+    <input type="text" id="urlInput" placeholder="Enter your URL here" />
+    <button onclick="shorten()">Shorten URL</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    async function shorten() {
+      const url = document.getElementById('urlInput').value.trim();
+      const result = document.getElementById('result');
+
+      if (!url) {
+        result.textContent = 'Please enter a URL!';
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:3000/url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
+        });
+
+        if (!response.ok) {
+          result.textContent = 'Error: ' + (await response.text());
+          return;
+        }
+
+        const data = await response.json();
+        result.innerHTML = `Short URL: <a href="http://localhost:3000/url/${data.id}" target="_blank">
+          http://localhost:3000/url/${data.id}</a>`;
+      } catch (err) {
+        result.textContent = 'Something went wrong. Try again.';
+        console.error(err);
+      }
+    }
+  </script>
+
+</body>
+</html>
