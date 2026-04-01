@@ -1,30 +1,16 @@
+const shortner = require('./routes/shortner');
+// const redirecting = require('./routes/redirecting.js');
+
+
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
-const urls = [];
 
-app.use(cors());
 app.use(express.json());
 
+app.use('/', shortner);
+// app.use('/', redirecting);
 
-
-app.post('/url',(req,res) => {
-    if(!req.body.url) return res.status(400).send('bad request');
-    const ur = {
-        id: urls.length + 1,
-        url: req.body.url,
-    }
-    urls.push(ur);
-    res.send(ur);
+app.listen(3000, ()=>{
+    console.log('server started at port 3000');
 })
-
-app.get('/url/:id', (req,res) =>{
-    const ur = urls.find(u => u.id === parseInt(req.params.id));
-    if(!ur) return res.status(404).send('some error happened');
-    res.redirect(ur.url);
-})
-
-app.listen(PORT, ()=>{
-    console.log(`started on ${PORT}`);
-});
