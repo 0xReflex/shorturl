@@ -10,7 +10,10 @@ router.post('/v1/', (req, res) =>{
     {
         return res.status(400).send('There is something wrong with given url');
     }
-
+    if (!request.startsWith("http://") && !request.startsWith("https://")) {
+        request = "https://" + request;
+    }
+    
     const parameter = {
         id: arr.length + 1,
         url: request
