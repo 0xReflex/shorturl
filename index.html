@@ -93,7 +93,7 @@
       }
 
       try {
-        const response = await fetch('https://shorturl-xjxb.vercel.app/url', {
+        const response = await fetch('https://shorturl-xjxb.vercel.app/v1/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url })
@@ -105,8 +105,8 @@
         }
 
         const data = await response.json();
-        result.innerHTML = `Short URL: <a href="https://shorturl-xjxb.vercel.app/url/${data.id}" target="_blank">
-          https://shorturl-xjxb.vercel.app/url/${data.id}</a>`;
+        result.innerHTML = `Short URL: <a href="https://shorturl-xjxb.vercel.app/${data.id}" target="_blank">
+          https://shorturl-xjxb.vercel.app/${data.id}</a>`;
       } catch (err) {
         result.textContent = 'Something went wrong. Try again.';
         console.error(err);
