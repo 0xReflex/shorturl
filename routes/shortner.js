@@ -42,14 +42,12 @@ router.delete('/:short', (req, res) =>{
 // Re directing the url with 
 router.get('/:short', (req, res) => {
     const id = parseInt(req.params.short, 10);
-
-    const entry = arr.find(item => item.id === id);
-
-    if (!entry) {
-        return res.status(400).send('Wrong url');
+    if(id > arr.length || id <= 0)
+    {
+        return res.status(400).send('Bad request');
     }
 
-    return res.redirect(entry.url);
+    return res.redirect(arr[id-1].url);
 });
 
 
