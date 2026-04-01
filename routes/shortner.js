@@ -18,7 +18,7 @@ router.post('/v1/', (req, res) =>{
 
     arr.push(parameter);
     console.log(`${request}`);
-    res.send(request);
+    res.json(parameter);
 })
 
 
