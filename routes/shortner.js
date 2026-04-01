@@ -5,7 +5,7 @@ const arr = [];
 
 // saving the URL
 router.post('/v1/', (req, res) =>{
-    const request = req.body.url.trim();
+    let request = req.body.url.trim();
     if(request.length <= 3 || request.length == 0)
     {
         return res.status(400).send('There is something wrong with given url');
