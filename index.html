@@ -46,7 +46,6 @@
       padding: 10px 15px;
       border-radius: 6px;
       border: none;
-      background: #ff9a9e;
       background: linear-gradient(to right, #ff9a9e, #fad0c4);
       color: #333;
       font-weight: bold;
@@ -100,13 +99,17 @@
         });
 
         if (!response.ok) {
-          result.textContent = 'Error: ' + (await response.text());
+          const errText = await response.text();
+          result.textContent = 'Error: ' + errText;
           return;
         }
 
-        const data = await response.json();
-        result.innerHTML = `Short URL: <a href="https://susho.vercel.app/${data.id}" target="_blank">
-          https://susho.vercel.app/${data.id}</a>`;
+        // Backend returns plain shortId
+        const shortId = await response.text();
+        const domain = 'https://susho.vercel.app'; // your domain for redirect
+        const shortLink = `${domain}/${shortId}`;
+
+        result.innerHTML = `Short URL: <a href="${shortLink}" target="_blank">${shortLink}</a>`;
       } catch (err) {
         result.textContent = 'Something went wrong. Try again.';
         console.error(err);
