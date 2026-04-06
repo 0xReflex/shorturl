@@ -35,7 +35,7 @@ async function createShortUrl(req,res){
     }catch(err){
         return res.send(500).send('Server error');
     }
-    return res.json({url: shortUrl});
+    return res.send(shortUrl);
 }
 
 module.exports = {createShortUrl};
