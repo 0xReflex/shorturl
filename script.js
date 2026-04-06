@@ -8,7 +8,8 @@ const app = express();
 
 dotenv.config();
 
-connectToMongoDB(process.env.MONGODB_URI);
+connectToMongoDB(process.env.MONGODB_URI)
+    .then(()=>{console.log('connected to mongodb')});
 
 app.use(cors());
 app.use(express.json());
