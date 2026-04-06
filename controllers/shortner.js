@@ -1,4 +1,4 @@
-const {nanoid} = require('nanoid');
+// const {nanoid} = require('nanoid');
 const URL = require('../models/url');
 const { models } = require('mongoose');
 
@@ -24,9 +24,10 @@ async function createShortUrl(req,res){
     if(request.err){
         return res.status(400).json({err: 'Bad request'});
     }
-    const shortUrl = nanoid(6);
 
     try{
+        const { nanoid } = await import('nanoid');
+        const shortUrl = nanoid(8);
         await URL.create({
             shortId: shortUrl,
             redirectUrl: request.data,
