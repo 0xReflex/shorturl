@@ -25,9 +25,10 @@ async function createShortUrl(req,res){
         return res.status(400).send(request.err);
     }
 
-    try{
-        const { nanoid } = await import('nanoid');
+            const { nanoid } = await import('nanoid');
         const shortUrl = nanoid(8);
+    try{
+
         await URL.create({
             shortId: shortUrl,
             redirectUrl: request.data,
