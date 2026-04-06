@@ -22,7 +22,7 @@ function schemaCheck(req,res){
 async function createShortUrl(req,res){
     const request = schemaCheck(req);
     if(request.err){
-        return res.status(400).send({err: request.err});
+        return res.status(400).send(request.err);
     }
 
     try{
